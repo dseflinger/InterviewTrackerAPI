@@ -1,5 +1,9 @@
+using InterviewTracker.Domain.Interfaces;
 using InterviewTracker.Infrastructure.Data;
+using InterviewTracker.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +15,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+builder.Services.AddScoped<IJobApplicationRepository, JobApplicationRepository>();
+
 
 var app = builder.Build();
 
@@ -28,3 +36,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+

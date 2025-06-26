@@ -43,7 +43,7 @@ namespace InterviewTracker.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] UpdateApplicationCommand request)
+        public async Task<IActionResult> Put(Guid id, [FromBody] UpdateApplicationCommand request)
         {
             var isUpdated = await _mediator.Send(request);
             if (!isUpdated)
